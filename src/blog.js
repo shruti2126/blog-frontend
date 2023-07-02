@@ -47,9 +47,15 @@ const Blog = () => {
     <Center flexDir="column" py={8}>
       <Box bg="white" p={4} mb={4}>
         <Text as="h1" fontSize="3xl" fontWeight="bold">
-          My Blog
+          The ADHD Immigrant's Journal
         </Text>
       </Box>
+		  <Text as="h2" fontSize="2xl" p={2} m={2} align={"center"}>
+        So in this blog, I want to talk about stuff that I care about in
+        relation to my experience as an immigrant in America and maybe give you
+        some insight into my life, my journey, my struggles and what I hope to
+        achieve.
+      </Text>
       <Flex wrap="wrap" justify="center">
         {blogPosts.map((post) => (
           <Box

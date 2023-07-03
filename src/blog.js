@@ -3,7 +3,17 @@
 ///** @format */
 
 import React from "react";
-import { Box, Text, Button, Center, Flex, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Button,
+  Center,
+  Flex,
+  Image,
+  useColorModeValue,
+} from "@chakra-ui/react";
+
+import "./blog.css";
 
 const Blog = () => {
   const blogPosts = [
@@ -43,18 +53,44 @@ const Blog = () => {
     // Add more blog posts as needed
   ];
 
+  //const backgroundImage = require("./assets/plant2.jpg");
+  const bgColor = useColorModeValue(
+    "rgba(0, 0, 0, 0.6)",
+    "rgba(255, 255, 255, 0.6)"
+  );
+
   return (
-    <Center flexDir="column" py={8}>
-      <Box bg="white" p={4} mb={4}>
-        <Text as="h1" fontSize="3xl" fontWeight="bold">
-          The ADHD Immigrant's Journal
+    <Center
+      className="background-container"
+      bgColor={bgColor}
+      flexDir="column"
+      py={8}
+      //backgroundImage={`url(${backgroundImage})`}
+      bgSize="cover"
+      minHeight="100vh"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      fontFamily={"Playfair Display"}
+    >
+      <Box p={4} mb={4}>
+        <Text as="h1" fontSize="5xl" fontWeight="bold" color={"pink.700"}>
+          An ADHD Immigrant
         </Text>
       </Box>
-		  <Text as="h2" fontSize="2xl" p={2} m={2} align={"center"}>
-        So in this blog, I want to talk about stuff that I care about in
-        relation to my experience as an immigrant in America and maybe give you
-        some insight into my life, my journey, my struggles and what I hope to
-        achieve.
+      <Text
+        as="h2"
+        fontSize="2xl"
+        p={2}
+        m={2}
+        align={"center"}
+        fontWeight={"semibold"}
+        color={"telegram.800"}
+      >
+        My brain is a fascinating place, and this is where I explore the ever so
+        intense and entertaining world within me. Its been hidden forever, but
+        not anymore! ;)
       </Text>
       <Flex wrap="wrap" justify="center">
         {blogPosts.map((post) => (
@@ -71,6 +107,7 @@ const Blog = () => {
             transition="box-shadow 0.2s"
             _hover={{ boxShadow: "lg" }}
             boxShadow="md"
+            bg="white"
           >
             <Box>
               <Image

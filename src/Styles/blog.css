@@ -1,0 +1,11 @@
+/** @format */
+
+.background-container {
+  /* Your other styles */
+  /* background-image: url("../assets/bg1.jpg"); */
+  background-color:black;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}

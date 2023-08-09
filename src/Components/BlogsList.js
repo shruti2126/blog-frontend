@@ -1,68 +1,11 @@
 /** @format */
 
 import { Box, Text, Button, Image } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import blogPosts from "../Data/Mock";
+import { useBlogContext } from "./BlogProvider";
 
 const BlogsList = () => {
-  const [blogs, setBlogs] = useState(blogPosts);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const url = "http://localhost:8080/";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        // const API_KEY = api_key;
-        // const url = "http://localhost:1337/api/blog-posts?populate=*";
-        // const headers = {
-        //   Authorization: `Bearer ${API_KEY}`,
-        // };
-        const response = await axios.get(
-          "http://localhost:8080/blog-posts?populate=*"
-          // { headers }
-        );
-        const data = response.data.data;
-        console.log(`data = ${data}`);
-        setBlogs(
-          data.map((blog) => ({
-            id: blog.id,
-            title: blog.attributes.title,
-            imageUrl:
-              "http://localhost:1337" +
-                blog.attributes.themeImage.data.attributes.url || "", // Access imageUrl through blog.attributes.themeImage.data.attributes.url
-            imageAlt:
-              blog.attributes.themeImage.data.attributes.alternativeText || "", // Access imageAlt through blog.attributes.themeImage.data.attributes.alternativeText
-            description: blog.attributes.description,
-            content: blog.attributes.content,
-          }))
-        );
-
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return (
-      <div>
-        <p fontSize="10px" color="white">
-          Error: {error.message}
-        </p>
-      </div>
-    );
-  }
+  const { blogs } = useBlogContext();
   return blogs.map((blog) => (
     <Box
       key={blog.id}
@@ -100,7 +43,7 @@ const BlogsList = () => {
           {blog.content}
         </Text>
         <Button size="sm" colorScheme="twitter">
-          <Link to={`/blog/${blog.id}`}>Read More</Link>{" "}
+          <Link to={`/blog/${blog.id}`} >Read More</Link>{" "}
           {/* Use Link instead of anchor tag */}
         </Button>
       </Box>

@@ -40,7 +40,7 @@ const Topics = () => {
         <Tab>Connecting the Dots</Tab>
         <Tab>ADHD, Anxiety and PTSD</Tab>
         <Tab>Side Effects of Immigration</Tab>
-        <Tab>Whatever</Tab>
+        <Tab>Making Me Make Sense!</Tab>
       </TabList>
     </Tabs>
   );

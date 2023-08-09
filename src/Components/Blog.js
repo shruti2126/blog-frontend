@@ -18,7 +18,7 @@ const Blog = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <Box p={4} mb={4}>
+      <Box p={2} mb={2}>
         <Text as="h1" fontSize="5xl" fontWeight="bold" color={"pink.700"}>
           Invisible Obstacles
         </Text>

@@ -2,28 +2,31 @@
 
 import { Box, Text, Button, Image } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import axios, { toFormData } from "axios";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import blogPosts from "../Data/Mock";
 
 const BlogsList = () => {
   const [blogs, setBlogs] = useState(blogPosts);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const url = "http://localhost:8080/";
 
-  const api_key =
-    "66c836cf992a8b0a936c1f8fdecc205bd56ab95313f60000921a13ad596f2879e7ede3d05ec19d1389aee05870746f2a980765f96305438b8598de4e4d579792e7de36d6244ffd8f2ccc8d145562d214f6db2a30db6013a0f6e6ef096f0e84b1941e6ed2c9246149516f15cc3990a3e52110576845cf03c0d9dc0d8417c9f459";
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const API_KEY = api_key;
-        const url = "http://localhost:1337/api/blog-posts?populate=*";
-        const headers = {
-          Authorization: `Bearer ${API_KEY}`,
-        };
-        const response = await axios.get(url, { headers });
+        // const API_KEY = api_key;
+        // const url = "http://localhost:1337/api/blog-posts?populate=*";
+        // const headers = {
+        //   Authorization: `Bearer ${API_KEY}`,
+        // };
+        const response = await axios.get(
+          "http://localhost:8080/blog-posts?populate=*"
+          // { headers }
+        );
         const data = response.data.data;
-        console.log(data);
+        console.log(`data = ${data}`);
         setBlogs(
           data.map((blog) => ({
             id: blog.id,
@@ -33,7 +36,8 @@ const BlogsList = () => {
                 blog.attributes.themeImage.data.attributes.url || "", // Access imageUrl through blog.attributes.themeImage.data.attributes.url
             imageAlt:
               blog.attributes.themeImage.data.attributes.alternativeText || "", // Access imageAlt through blog.attributes.themeImage.data.attributes.alternativeText
-            content: blog.attributes.description,
+            description: blog.attributes.description,
+            content: blog.attributes.content,
           }))
         );
 
@@ -52,8 +56,10 @@ const BlogsList = () => {
 
   if (error) {
     return (
-      <div background-color="white" height="100%" width="100%">
-        Error: {error.message}
+      <div>
+        <p fontSize="10px" color="white">
+          Error: {error.message}
+        </p>
       </div>
     );
   }
@@ -87,11 +93,15 @@ const BlogsList = () => {
         <Text as="h2" fontSize="2xl" fontWeight="bold" mb={2}>
           {blog.title}
         </Text>
+        <Text color="gray.600" fontSize="2xm" mb={4}>
+          {blog.description}
+        </Text>
         <Text color="gray.600" fontSize="md" mb={4}>
           {blog.content}
         </Text>
         <Button size="sm" colorScheme="twitter">
-          Read More
+          <Link to={`/blog/${blog.id}`}>Read More</Link>{" "}
+          {/* Use Link instead of anchor tag */}
         </Button>
       </Box>
     </Box>

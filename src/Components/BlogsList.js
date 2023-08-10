@@ -1,11 +1,17 @@
 /** @format */
 
 import { Box, Text, Button, Image } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBlogContext } from "./BlogProvider";
 
 const BlogsList = () => {
   const { blogs } = useBlogContext();
+  const navigate = useNavigate();
+
+  const handleBlogClick = (blogId) => {
+    console.log("blog id = " + blogId);
+    navigate(`/blog/${blogId}`);
+  };
   return blogs.map((blog) => (
     <Box
       key={blog.id}
@@ -39,12 +45,12 @@ const BlogsList = () => {
         <Text color="gray.600" fontSize="2xm" mb={4}>
           {blog.description}
         </Text>
-        <Text color="gray.600" fontSize="md" mb={4}>
-          {blog.content}
-        </Text>
-        <Button size="sm" colorScheme="twitter">
-          <Link to={`/blog/${blog.id}`} >Read More</Link>{" "}
-          {/* Use Link instead of anchor tag */}
+        <Button
+          onClick={() => handleBlogClick(blog.id)}
+          size="sm"
+          colorScheme="twitter"
+        >
+          Read More
         </Button>
       </Box>
     </Box>

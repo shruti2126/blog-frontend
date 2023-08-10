@@ -21,7 +21,6 @@ export function BlogProvider({ children }) {
           "http://localhost:8080/blog-posts?populate=*"
         );
         const data = response.data.data;
-        console.log(`data = ${data}`);
         setBlogs(
           data.map((blog) => ({
             id: blog.id,
@@ -33,6 +32,7 @@ export function BlogProvider({ children }) {
               blog.attributes.themeImage.data.attributes.alternativeText || "",
             description: blog.attributes.description,
             content: blog.attributes.content,
+            updatedAt: blog.attributes.updatedAt,
           }))
         );
 
@@ -60,9 +60,7 @@ export function BlogProvider({ children }) {
   }
 
   return (
-	  <BlogContext.Provider value={{ blogs }}>
-      {children}
-    </BlogContext.Provider>
+    <BlogContext.Provider value={{ blogs }}>{children}</BlogContext.Provider>
   );
 }
 

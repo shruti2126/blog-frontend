@@ -10,6 +10,7 @@ const blogPosts = [
       "Just a random mental health related photo of a girl sitting on a sofa looking distressed",
     description: "some description",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    updatedAt: "Thursday",
   },
 ];
 

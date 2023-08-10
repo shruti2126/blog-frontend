@@ -27,16 +27,19 @@ function BlogPage() {
 
   return (
     <Box maxW="800px" m="0 auto" p="20px">
+      <Text fontSize="5xl" fontWeight="semibold" mb="10px" textAlign="center">
+        {selectedBlog.title}
+      </Text>
       <Image
         src={selectedBlog.imageUrl}
         alt={selectedBlog.imageAlt}
         objectFit="cover"
         borderRadius="lg"
         mb="20px"
+        width="80%" 
+        height="500px" 
+        mx="auto" 
       />
-      <Text fontSize="xl" fontWeight="semibold" mb="10px">
-        {selectedBlog.title}
-      </Text>
       <Flex justifyContent="space-between" alignItems="center" mb="10px">
         <Box>
           <Text fontSize="md" color="gray.600" mb={2}>

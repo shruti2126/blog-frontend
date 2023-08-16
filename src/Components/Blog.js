@@ -4,7 +4,7 @@ import { Box, Text, Center, Flex } from "@chakra-ui/react";
 import "../Styles/blog.css";
 import BlogsList from "./BlogsList.js";
 import Introduction from "./Introduction";
-import Topics from "./Topics";
+import CategoryTabs from "./CategoryTabs";
 
 const Blog = () => {
   return (
@@ -24,7 +24,7 @@ const Blog = () => {
         </Text>
       </Box>
       <Introduction />
-      <Topics />
+      <CategoryTabs />
       <Flex wrap="wrap" justify="center">
         <BlogsList />
       </Flex>

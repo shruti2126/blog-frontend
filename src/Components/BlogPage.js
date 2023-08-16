@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useBlogContext } from "./BlogProvider";
+import { useBlogContext } from "../Hooks/useBlogContext";
 import {
   Box,
   Image,
@@ -24,7 +24,6 @@ function BlogPage() {
   if (!selectedBlog) {
     return <div>Blog not found</div>;
   }
-
   return (
     <Box maxW="800px" m="0 auto" p="20px">
       <Text fontSize="5xl" fontWeight="semibold" mb="10px" textAlign="center">
@@ -36,9 +35,9 @@ function BlogPage() {
         objectFit="cover"
         borderRadius="lg"
         mb="20px"
-        width="80%" 
-        height="500px" 
-        mx="auto" 
+        width="80%"
+        height="500px"
+        mx="auto"
       />
       <Flex justifyContent="space-between" alignItems="center" mb="10px">
         <Box>
@@ -49,9 +48,15 @@ function BlogPage() {
             Updated At: {new Date(selectedBlog.updatedAt).toLocaleDateString()}
           </Text>
         </Box>
-        {/* <Box>
-          <Badge colorScheme="green">ADHD</Badge>
-        </Box> */}
+        {selectedBlog.category && (
+          <Box>
+            {Object.entries(selectedBlog.category).map(([category, color]) => (
+              <Badge key={category} colorScheme={color} mr={2}>
+                {category}
+              </Badge>
+            ))}
+          </Box>
+        )}
       </Flex>
       <Divider my="20px" />
       <Text fontSize="lg">{selectedBlog.content}</Text>

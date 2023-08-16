@@ -1,9 +1,9 @@
 /** @format */
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import blogPosts from "../Data/Mock";
 import axios from "axios";
-
+import { useBlogContext } from "../Hooks/useBlogContext";
 // Create a context
 const BlogContext = createContext();
 
@@ -33,6 +33,7 @@ export function BlogProvider({ children }) {
             description: blog.attributes.description,
             content: blog.attributes.content,
             updatedAt: blog.attributes.updatedAt,
+            category: { "category": "color" },
           }))
         );
 
@@ -64,7 +65,4 @@ export function BlogProvider({ children }) {
   );
 }
 
-// Custom hook to access the context
-export function useBlogContext() {
-  return useContext(BlogContext);
-}
+useBlogContext(BlogContext);

@@ -1,9 +1,9 @@
 /** @format */
 
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import blogPosts from "../Data/Mock";
 import axios from "axios";
-import { useBlogContext } from "../Hooks/useBlogContext";
+import { useSelector } from "react-redux";
 // Create a context
 const BlogContext = createContext();
 
@@ -12,14 +12,22 @@ export function BlogProvider({ children }) {
   const [blogs, setBlogs] = useState(blogPosts);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const selectedCategory = useSelector((state) => state.value);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "http://localhost:8080/blog-posts?populate=*"
-        );
+        let response;
+        if (selectedCategory === "All") {
+          response = await axios.get("http://localhost:8080/blogs", {
+            params: { populate: "*" },
+          });
+        } else {
+          response = await axios.get("http://localhost:8080/blogsByCategory", {
+            params: { category: selectedCategory, populate: "*" },
+          });
+        }
         const data = response.data.data;
         setBlogs(
           data.map((blog) => ({
@@ -33,10 +41,9 @@ export function BlogProvider({ children }) {
             description: blog.attributes.description,
             content: blog.attributes.content,
             updatedAt: blog.attributes.updatedAt,
-            category: { "category": "color" },
+            category: blog.attributes.category,
           }))
         );
-
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -44,7 +51,7 @@ export function BlogProvider({ children }) {
       }
     };
     fetchData();
-  }, []);
+  }, [selectedCategory]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -65,4 +72,6 @@ export function BlogProvider({ children }) {
   );
 }
 
-useBlogContext(BlogContext);
+export function useBlogContext() {
+  return useContext(BlogContext);
+}

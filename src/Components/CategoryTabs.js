@@ -1,39 +1,36 @@
 /** @format */
 
-import { Tabs, TabList, Tab } from "@chakra-ui/react";
+import { Tabs, TabList, Tab, TabPanels } from "@chakra-ui/react";
+import categoryList from "../Data/Categories";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategory } from "../Redux/Reducers/categoryReducer";
 
-const CategoryTabs = ({ setCategory }) => {
-  const categories = {
-    All: "white",
-    "Connecting the Dots": "purple",
-    "ADHD, Anxiety and PTSD": "blue",
-    "Side Effects Of Immigration": "green",
-    "Make Me Make Sense!": "yellow",
+const CategoryTabs = () => {
+  const dispatch = useDispatch();
+  const handleTabChange = (index) => {
+    const selectedCategory = categoryList[index];
+    console.log(selectedCategory);
+    dispatch(setCategory(selectedCategory));
   };
-
-  function handleCategoryChange(e) {
-    //only fetch blogs with selected category
-  }
 
   return (
     <Tabs
-      onChange={handleCategoryChange}
       variant="soft-rounded"
       colorScheme="linkedin"
       size="md"
       isLazy
       m={5}
       p={4}
+      onChange={handleTabChange}
     >
       <TabList justifyContent="center">
-        {Object.keys(categories).map((category) => (
-          <Tab key={category}>{category}</Tab>
+        {categoryList.map((category) => (
+          <Tab key={category}>
+            <span>{category}</span>
+          </Tab>
         ))}
-        {/* <Tab>Connecting the Dots</Tab>
-        <Tab>ADHD, Anxiety and PTSD</Tab>
-        <Tab>Side Effects of Immigration</Tab>
-        <Tab>Making Me Make Sense!</Tab> */}
       </TabList>
+      <TabPanels></TabPanels>
     </Tabs>
   );
 };

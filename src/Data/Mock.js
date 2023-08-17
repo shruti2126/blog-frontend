@@ -11,10 +11,7 @@ const blogPosts = [
     description: "some description",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     updatedAt: "Thursday",
-    category: {
-      "Connecting the Dots": "purple",
-      "ADHD, Anxiety and PTSD": "blue",
-    },
+    category: ["Connecting the Dots", "ADHD, Anxiety and PTSD"],
   },
 ];
 

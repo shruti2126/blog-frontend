@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useBlogContext } from "../Hooks/useBlogContext";
+import { useBlogContext } from "./BlogProvider";
 import {
   Box,
   Image,
@@ -12,6 +12,7 @@ import {
   Flex,
   Badge,
   IconButton,
+  List,
 } from "@chakra-ui/react";
 import { FiHeart, FiBookmark, FiShare2 } from "react-icons/fi";
 
@@ -48,15 +49,6 @@ function BlogPage() {
             Updated At: {new Date(selectedBlog.updatedAt).toLocaleDateString()}
           </Text>
         </Box>
-        {selectedBlog.category && (
-          <Box>
-            {Object.entries(selectedBlog.category).map(([category, color]) => (
-              <Badge key={category} colorScheme={color} mr={2}>
-                {category}
-              </Badge>
-            ))}
-          </Box>
-        )}
       </Flex>
       <Divider my="20px" />
       <Text fontSize="lg">{selectedBlog.content}</Text>
@@ -84,6 +76,17 @@ function BlogPage() {
             ml="2"
           />
         </Box>
+
+        <Box>
+          {Array(selectedBlog.category).map((category) => (
+            <>
+              <Badge key={category} colorScheme="whatsapp" mr={2}>
+                {category + "\n"}
+              </Badge>
+            </>
+          ))}
+        </Box>
+
         <Box>
           <Text fontSize="sm" color="gray.600">
             Share this post

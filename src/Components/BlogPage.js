@@ -12,7 +12,7 @@ import {
   Flex,
   Badge,
   IconButton,
-  List,
+  Stack,
 } from "@chakra-ui/react";
 import { FiHeart, FiBookmark, FiShare2 } from "react-icons/fi";
 
@@ -77,15 +77,15 @@ function BlogPage() {
           />
         </Box>
 
-        <Box>
-          {Array(selectedBlog.category).map((category) => (
-            <>
-              <Badge key={category} colorScheme="whatsapp" mr={2}>
-                {category + "\n"}
+        <Stack direction="row">
+          {selectedBlog.category.map((category, index) => {
+            return (
+              <Badge colorScheme="whatsapp" key={index}>
+                {category}
               </Badge>
-            </>
-          ))}
-        </Box>
+            );
+          })}
+        </Stack>
 
         <Box>
           <Text fontSize="sm" color="gray.600">

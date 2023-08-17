@@ -54,13 +54,11 @@ const BlogsList = () => {
             Read More
           </Button>
           <Stack direction="row">
-            {blog.category.map((category, index) => {
-              return (
-                <Badge colorScheme="whatsapp" key={index}>
-                  {category}
-                </Badge>
-              );
-            })}
+            {blog.category.map((category, index) => (
+              <Badge colorScheme="whatsapp" key={index}>
+                {category}
+              </Badge>
+            ))}
           </Stack>
         </Stack>
       </Box>

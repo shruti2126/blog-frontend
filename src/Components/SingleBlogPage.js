@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useBlogContext } from "./BlogProvider";
 import {
   Box,
   Image,
@@ -15,9 +14,11 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { FiHeart, FiBookmark, FiShare2 } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { selectAllBlogs } from "../Redux/Reducers/blogReducer";
 
-function BlogPage() {
-  const { blogs } = useBlogContext();
+function SingleBlogPage() {
+  const blogs = useSelector(selectAllBlogs);
   const { id } = useParams();
 
   const selectedBlog = blogs.find((blog) => blog.id === parseInt(id));
@@ -100,4 +101,4 @@ function BlogPage() {
   );
 }
 
-export default BlogPage;
+export default SingleBlogPage;

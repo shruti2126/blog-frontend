@@ -4,23 +4,30 @@ import { Box, Text, Button, Image, Badge, Stack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBlogsData, selectAllBlogs } from "../Redux/Reducers/blogReducer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const BlogsList = () => {
   const dispatch = useDispatch();
   const blogs = useSelector(selectAllBlogs);
-  console.log("all blogs  in blog list = ", blogs);
   const blogStatus = useSelector((state) => state.blogs.status);
-  const selectedCategory = useSelector((state) => state.category);
+  const selectedCategory = useSelector((state) => state.category.category);
   console.log("selected category = ", selectedCategory);
-  const filteredBlogs = blogs.filter(
-    (blog) => blog.category === selectedCategory
-  );
+
+  const [filteredBlogs, setFilteredBlogs] = useState(blogs);
+
+  useEffect(() => {
+    // Filter blogs based on the selected category
+    const filtered = blogs.filter((blog) =>
+      selectedCategory === "All"
+        ? true
+        : blog.category.includes(selectedCategory)
+    );
+    setFilteredBlogs(filtered); // Update the filteredBlogs state here
+  }, [selectedCategory, blogs]);
+
   useEffect(() => {
     if (blogStatus === "idle") {
-      console.log("action is dispatched");
       dispatch(fetchBlogsData());
-      console.log("status after dispatch = ", blogStatus);
     }
   }, [blogStatus, dispatch]);
 
@@ -30,7 +37,7 @@ const BlogsList = () => {
   };
 
   console.log("filtered blogs in blogList = ", filteredBlogs);
-  return blogs.map((blog) => (
+  return filteredBlogs.map((blog) => (
     <Box
       key={blog.id}
       maxW="sm"
@@ -73,12 +80,12 @@ const BlogsList = () => {
             Read More
           </Button>
           <Stack direction="row">
-                {blog.category.map((category, index) => (
-                  <Badge colorScheme="whatsapp" key={index}>
-                    {category}
-                  </Badge>
-                ))}
-              </Stack>
+            {blog.category.map((category, index) => (
+              <Badge colorScheme="whatsapp" key={index}>
+                {category}
+              </Badge>
+            ))}
+          </Stack>
         </Stack>
       </Box>
     </Box>

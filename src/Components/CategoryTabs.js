@@ -1,26 +1,21 @@
 /** @format */
-import { useState } from "react";
+
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAllBlogs } from "../Redux/Reducers/blogReducer";
+import { useDispatch } from "react-redux";
 import { setCategory } from "../Redux/Reducers/categoryReducer";
 
 const CategoryTabs = () => {
   const categoryList = [
     "All",
-    "Connecting the Dots",
+    "Connecting The Dots",
     "ADHD, Anxiety and PTSD",
     "Side Effects Of Immigration",
     "Make Me Make Sense!",
   ];
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const blogs = useSelector(selectAllBlogs);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const handleTabChange = (index) => {
-    setSelectedCategory(categoryList[index]);
-    dispatch(setCategory(selectedCategory));
-    console.log("filtered blogs in category tabs = ", blogs);
+    dispatch(setCategory(categoryList[index]));
   };
 
   return (

@@ -20,7 +20,7 @@ const BlogsList = () => {
         ? true
         : blog.category.includes(selectedCategory)
     );
-    setFilteredBlogs(filtered); // Update the filteredBlogs state here
+    setFilteredBlogs(filtered); 
   }, [selectedCategory, blogs]);
 
   useEffect(() => {
@@ -34,7 +34,6 @@ const BlogsList = () => {
     navigate(`/blog/${blogId}`);
   };
 
-  console.log("filtered blogs in blogList = ", filteredBlogs);
   return filteredBlogs.map((blog) => (
     <Box
       key={blog.id}

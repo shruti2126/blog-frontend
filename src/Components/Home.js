@@ -6,7 +6,7 @@ import BlogsList from "./BlogsList.js";
 import Introduction from "./Introduction";
 import CategoryTabs from "./CategoryTabs";
 
-const Blog = () => {
+const Home = () => {
   return (
     <Center
       className="background-container"
@@ -32,4 +32,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default Home;

@@ -1,20 +1,13 @@
 /** @format */
 
-// Fetch blogs based on category
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-async function fetchBlogs(category) {
-  let response;
-  if (category === "All") {
-    response = await axios.get("http://localhost:8080/blogs", {
-      params: { populate: "*" },
-    });
-  } else {
-    response = await axios.get("http://localhost:8080/blogsByCategory", {
-      params: { category: category, populate: "*" },
-    });
-  }
-  const data = response.data.data;
-  return [data.map((blog) => ({
+
+export const fetchBlogs = createAsyncThunk("blogs/fetchBlogs", async () => {
+  const response = await axios.get("http://localhost:8080/blogs", {
+    params: { populate: "*" },
+  });
+  const data = response.data.data.map((blog) => ({
     id: blog.id,
     title: blog.attributes.title,
     imageUrl:
@@ -25,6 +18,6 @@ async function fetchBlogs(category) {
     content: blog.attributes.content,
     updatedAt: blog.attributes.updatedAt,
     category: blog.attributes.category,
-  }))];
-}
-export default fetchBlogs;
+  }));
+  return data;
+});

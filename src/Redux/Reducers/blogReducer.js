@@ -1,7 +1,7 @@
 /** @format */
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchBlogs } from "../../Functions/fetchBlogs";
 
 const initialState = {
   data: [],
@@ -9,31 +9,11 @@ const initialState = {
   error: null,
 };
 
-export const fetchBlogsData = createAsyncThunk("blogs/fetchBlogs", async () => {
-  const response = await axios.get("http://localhost:8080/blogs", {
-    params: { populate: "*" },
-  });
-  const data = response.data.data.map((blog) => ({
-    id: blog.id,
-    title: blog.attributes.title,
-    imageUrl:
-      "http://localhost:1337" +
-        blog.attributes.themeImage.data.attributes.url || "",
-    imageAlt: blog.attributes.themeImage.data.attributes.alternativeText || "",
-    description: blog.attributes.description,
-    content: blog.attributes.content,
-    updatedAt: blog.attributes.updatedAt,
-    category: blog.attributes.category,
-  }));
-  return data;
-});
+export const fetchBlogsData = fetchBlogs;
 
 const blogsSlice = createSlice({
   name: "blogs",
   initialState,
-  reducers: {
-    filterBlogsByCategory: (state, action) => {},
-  },
   extraReducers(builder) {
     builder
       .addCase(fetchBlogsData.pending, (state, action) => {

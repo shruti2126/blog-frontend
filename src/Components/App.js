@@ -1,15 +1,15 @@
 /** @format */
 
-import { React} from "react";
+import { React } from "react";
 import { Routes, Route } from "react-router-dom";
 import SingleBlogPage from "./SingleBlogPage";
-import Blog from "./Blog";
+import Home from "./Home";
 
 function App() {
   return (
     //<BlogProvider>
     <Routes>
-      <Route path="*" element={<Blog />} />
+      <Route path="*" element={<Home />} />
       <Route path="/blog/:id" element={<SingleBlogPage />} />
     </Routes>
     //</BlogProvider>

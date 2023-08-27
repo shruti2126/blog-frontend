@@ -11,8 +11,6 @@ const BlogsList = () => {
   const blogs = useSelector(selectAllBlogs);
   const blogStatus = useSelector((state) => state.blogs.status);
   const selectedCategory = useSelector((state) => state.category.category);
-  console.log("selected category = ", selectedCategory);
-
   const [filteredBlogs, setFilteredBlogs] = useState(blogs);
 
   useEffect(() => {

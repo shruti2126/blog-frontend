@@ -1,10 +1,8 @@
 /** @format */
 
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react"; // Include useEffect in the import statement
 import {
   Box,
-  Image,
   Text,
   Divider,
   Link,
@@ -12,19 +10,29 @@ import {
   Badge,
   IconButton,
   Stack,
+  Image,
 } from "@chakra-ui/react";
+import { useParams } from "react-router-dom/dist";
 import { FiHeart, FiBookmark, FiShare2 } from "react-icons/fi";
-import { useSelector } from "react-redux";
-import { selectAllBlogs } from "../Redux/Reducers/blogReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogsData, selectAllBlogs } from "../Redux/Reducers/blogReducer";
+import Comments from "./Comments";
 
-function SingleBlogPage() {
-  const blogs = useSelector(selectAllBlogs);
+const SingleBlogPage = () => {
   const { id } = useParams();
-
+  const dispatch = useDispatch();
+  const blogs = useSelector(selectAllBlogs);
+  const blogStatus = useSelector((state) => state.blogs.status);
   const selectedBlog = blogs.find((blog) => blog.id === parseInt(id));
 
+  useEffect(() => {
+    if (blogStatus === "idle") {
+      dispatch(fetchBlogsData());
+    }
+  }, [blogStatus, dispatch]);
+
   if (!selectedBlog) {
-    return <div>Blog not found</div>;
+    return <div>Loading...</div>; 
   }
   return (
     <Box maxW="800px" m="0 auto" p="20px">
@@ -54,6 +62,7 @@ function SingleBlogPage() {
       <Divider my="20px" />
       <Text fontSize="lg">{selectedBlog.content}</Text>
       <Divider my="20px" />
+      <Comments selectedBlog={selectedBlog} />
       <Flex justifyContent="space-between" alignItems="center">
         <Box>
           <IconButton
@@ -77,7 +86,6 @@ function SingleBlogPage() {
             ml="2"
           />
         </Box>
-
         <Stack direction="row">
           {selectedBlog.category.map((category, index) => {
             return (
@@ -99,6 +107,6 @@ function SingleBlogPage() {
       </Flex>
     </Box>
   );
-}
+};
 
 export default SingleBlogPage;

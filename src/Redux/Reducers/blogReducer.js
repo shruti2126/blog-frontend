@@ -21,6 +21,7 @@ const blogsSlice = createSlice({
       })
       .addCase(fetchBlogsData.fulfilled, (state, action) => {
         state.status = "succeeded";
+        console.log(action.payload);
         state.data = [...state.data, ...action.payload];
       })
       .addCase(fetchBlogsData.rejected, (state, action) => {

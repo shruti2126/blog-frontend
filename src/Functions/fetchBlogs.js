@@ -18,6 +18,9 @@ export const fetchBlogs = createAsyncThunk("blogs/fetchBlogs", async () => {
     content: blog.attributes.content,
     updatedAt: blog.attributes.updatedAt,
     category: blog.attributes.category,
+    comments: blog.attributes.comments.data,
+    likes: blog.attributes.likes.data,
   }));
+  console.log("fetched blog data in thunk = ", data);
   return data;
 });

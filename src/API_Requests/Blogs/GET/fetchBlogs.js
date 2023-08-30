@@ -4,9 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchBlogs = createAsyncThunk("blogs/fetchBlogs", async () => {
-  const response = await axios.get("http://localhost:8080/blogs", {
-    params: { populate: "*" },
-  });
+  const response = await axios.get("http://localhost:8080/fetchAllBlogs");
   const data = response.data.data.map((blog) => ({
     id: blog.id,
     title: blog.attributes.title,
@@ -18,9 +16,9 @@ export const fetchBlogs = createAsyncThunk("blogs/fetchBlogs", async () => {
     content: blog.attributes.content,
     updatedAt: blog.attributes.updatedAt,
     category: blog.attributes.category,
-    comments: blog.attributes.comments.data,
-    likes: blog.attributes.likes.data,
+    // comments: blog.attributes.comments.data,
+    // likes: blog.attributes.likes.data,
   }));
-  console.log("fetched blog data in thunk = ", data);
+  //console.log("fetched blog data in thunk = ", data);
   return data;
 });

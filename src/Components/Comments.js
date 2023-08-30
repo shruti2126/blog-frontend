@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Box,
   Text,
@@ -11,23 +11,36 @@ import {
   Textarea,
   Button,
 } from "@chakra-ui/react";
-import addComment from "../API_Requests/Comments/POST/addComment";
+import addNewComment from "../API_Requests/Comments/POST/addComment";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addComment,
+  fetchCommentsByPost,
+} from "../Redux/Reducers/commentsReducer";
+import { v4 as uuidv4 } from "uuid"; 
 
 const Comments = ({ selectedBlog }) => {
-  const [newComment, setNewComment] = useState("");
-  const commentData = selectedBlog.comments;
-
-  const handleCommentChange = (event) => {
-    setNewComment(event.target.value);
-  };
+  const commentData = useSelector((state) => state.comments.data);
+  const commentInputRef = useRef(""); 
+  const dispatch = useDispatch();
+  console.log("comment data in Comments.js = ", commentData);
 
   const handleCommentSubmit = () => {
-    addComment({
+    const newCommentId = uuidv4(); 
+    const newComment = {
+      id: newCommentId,
       postId: selectedBlog.id,
-      content: newComment,
+      content: commentInputRef.current.value,
       author: "new author",
-    }).then((data) => console.log(data));
+    };
+    addNewComment(newComment);
+    dispatch(addComment(newComment));
+    commentInputRef.current.value = ""; // Clear the input after submitting
   };
+  useEffect(() => {
+    // Fetch comments whenever the selectedBlog.id changes
+    dispatch(fetchCommentsByPost(selectedBlog.id));
+  }, [selectedBlog.id, dispatch]);
 
   if (commentData.length !== 0) {
     return (
@@ -38,8 +51,7 @@ const Comments = ({ selectedBlog }) => {
           </Text>
         </Center>
         <Textarea
-          value={newComment}
-          onChange={handleCommentChange}
+          ref={commentInputRef} // Assign the ref to the textarea
           placeholder="Add your comment..."
           mt="20px"
         />
@@ -54,12 +66,12 @@ const Comments = ({ selectedBlog }) => {
         {commentData.map((comment) => (
           <Box key={comment.id} mb="20px">
             <Stack direction="row">
-              <Avatar size="sm" name={comment.attributes.author} mr="2px" />
-              <Text fontWeight="semibold">{comment.attributes.author}</Text>
+              <Avatar size="sm" name={comment.author} mr="2px" />
+              <Text fontWeight="semibold">{comment.author}</Text>
             </Stack>
             <Stack direction="col">
               <Text fontSize="md" color="gray.600" mt="10px">
-                {comment.attributes.content}
+                {comment.content}
               </Text>
             </Stack>
             <Divider my="10px" />

@@ -1,7 +1,7 @@
 /** @format */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBlogs } from "../../Functions/fetchBlogs";
+import { fetchBlogs } from "../../API_Requests/Blogs/GET/fetchBlogs";
 
 const initialState = {
   data: [],
@@ -21,7 +21,6 @@ const blogsSlice = createSlice({
       })
       .addCase(fetchBlogsData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.data = [...state.data, ...action.payload];
       })
       .addCase(fetchBlogsData.rejected, (state, action) => {

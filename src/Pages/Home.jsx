@@ -2,7 +2,7 @@
 
 import { Box, Text, Center, Flex } from "@chakra-ui/react";
 import "../Styles/blog.css";
-import BlogsList from "./BlogsList.js";
+import BlogsList from "./BlogsList.jsx";
 import Introduction from "./Introduction";
 import CategoryTabs from "./CategoryTabs";
 

@@ -1,32 +1,24 @@
 /** @format */
 
 import React, { useEffect, useRef } from "react";
-import {
-  Box,
-  Text,
-  Divider,
-  Stack,
-  Avatar,
-  Center,
-  Textarea,
-  Button,
-} from "@chakra-ui/react";
+import { Box, Text, Center, Textarea, Button } from "@chakra-ui/react";
 import addNewComment from "../API_Requests/Comments/POST/addComment";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addComment,
   fetchCommentsByPost,
 } from "../Redux/Reducers/commentsReducer";
-import { v4 as uuidv4 } from "uuid"; 
+import { v4 as uuidv4 } from "uuid";
+import Comment from "../Components/Comment";
 
 const Comments = ({ selectedBlog }) => {
   const commentData = useSelector((state) => state.comments.data);
-  const commentInputRef = useRef(""); 
+  const commentInputRef = useRef("");
   const dispatch = useDispatch();
   console.log("comment data in Comments.js = ", commentData);
 
   const handleCommentSubmit = () => {
-    const newCommentId = uuidv4(); 
+    const newCommentId = uuidv4();
     const newComment = {
       id: newCommentId,
       postId: selectedBlog.id,
@@ -63,19 +55,21 @@ const Comments = ({ selectedBlog }) => {
         >
           Submit
         </Button>
+
         {commentData.map((comment) => (
-          <Box key={comment.id} mb="20px">
-            <Stack direction="row">
-              <Avatar size="sm" name={comment.author} mr="2px" />
-              <Text fontWeight="semibold">{comment.author}</Text>
-            </Stack>
-            <Stack direction="col">
-              <Text fontSize="md" color="gray.600" mt="10px">
-                {comment.content}
-              </Text>
-            </Stack>
-            <Divider my="10px" />
-          </Box>
+          <Comment comment={comment}/>
+          // <Box key={comment.id} mb="20px">
+          //   <Stack direction="row">
+          //     <Avatar size="sm" name={comment.author} mr="2px" />
+          //     <Text fontWeight="semibold">{comment.author}</Text>
+          //   </Stack>
+          //   <Stack direction="col">
+          //     <Text fontSize="md" color="gray.600" mt="10px">
+          //       {comment.content}
+          //     </Text>
+          //   </Stack>
+          //   <Divider my="10px" />
+          // </Box>
         ))}
       </Box>
     );

@@ -1,6 +1,6 @@
 /** @format */
 
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
+import { Tabs, TabList } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setCategory } from "../Redux/Reducers/categoryReducer";
 
@@ -28,16 +28,7 @@ const CategoryTabs = () => {
       onChange={handleTabChange}
       textColor={"whiteAlpha.500"}
     >
-      <TabList justifyContent="center">
-        {categoryList.map((category) => (
-          <Tab key={category}>
-            <span>{category}</span>
-          </Tab>
-        ))}
-      </TabList>
-      <TabPanels>
-        <TabPanel></TabPanel>
-      </TabPanels>
+      <TabList categoryList={categoryList} />
     </Tabs>
   );
 };
